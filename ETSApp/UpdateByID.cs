@@ -23,12 +23,12 @@ namespace ETSApp
 
         private void btnSearchID_Click(object sender, EventArgs e)
         {
-
+            //error - user must enter ID
             if (txtSearchID.Text == "")
             {
                 MessageBox.Show("Please enter a valid ID");
             }
-
+            //after get any number
             else
             {
                 int ID = int.Parse(txtSearchID.Text);
@@ -45,7 +45,7 @@ namespace ETSApp
                         txtPhone.Text = result.Data.Phone;
                         lblID.Text = result.Data.EmpID.ToString();
 
-                        //error
+                        //error - 0 or id not exits
                         if (lblID.Text == "0" || result.Data.EmpID.ToString() == null)
                         {
                             MessageBox.Show("ID is not exits, please check again");
@@ -76,11 +76,12 @@ namespace ETSApp
                     txtPhone.Text = result.Data.Phone;
                     lblID.Text = result.Data.EmpID.ToString();
 
-                    //error
+                    //error - no email address
                     if (txtSearchEmail.Text == "")
                     {
                         MessageBox.Show("Please enter email address");
                     }
+                    //error - wrong email address
                     else if (result.Data.Email == null)
                     {
                         MessageBox.Show("Error, email address not registered.");
