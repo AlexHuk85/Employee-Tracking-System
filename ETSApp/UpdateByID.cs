@@ -23,24 +23,40 @@ namespace ETSApp
 
         private void btnSearchID_Click(object sender, EventArgs e)
         {
-            int ID = int.Parse(txtSearchID.Text);
-            EmployeeManager manager = new EmployeeManager();
-            Result<Employees> result = manager.SearchByID(ID);
 
-            switch (result.Status)
+            if (txtSearchID.Text == "")
             {
-                case EnumResult.Success:
-                    txtFirstName.Text = result.Data.FirstName;
-                    txtLastName.Text = result.Data.LastName;
-                    txtEmail.Text = result.Data.Email;
-                    txtDOB.Text = result.Data.DOB.ToString("yyyy/MM/dd");
-                    txtPhone.Text = result.Data.Phone;
-                    lblID.Text = result.Data.EmpID.ToString();
-                    break;
-                case EnumResult.Fail:
-                    MessageBox.Show("Error, try again.");
-                    break;
+                MessageBox.Show("Please enter a valid ID");
             }
+
+            else
+            {
+                int ID = int.Parse(txtSearchID.Text);
+                EmployeeManager manager = new EmployeeManager();
+                Result<Employees> result = manager.SearchByID(ID);
+
+                switch (result.Status)
+                {
+                    case EnumResult.Success:
+                        txtFirstName.Text = result.Data.FirstName;
+                        txtLastName.Text = result.Data.LastName;
+                        txtEmail.Text = result.Data.Email;
+                        txtDOB.Text = result.Data.DOB.ToString("yyyy/MM/dd");
+                        txtPhone.Text = result.Data.Phone;
+                        lblID.Text = result.Data.EmpID.ToString();
+
+                        //error
+                        if (lblID.Text == "0" || result.Data.EmpID.ToString() == null)
+                        {
+                            MessageBox.Show("ID is not exits, please check again");
+                        }
+                        break;
+                    case EnumResult.Fail:
+                        MessageBox.Show("Error, try again.");
+                        break;
+                }
+            }
+
             txtSearchID.Clear();
         }
 
@@ -59,6 +75,16 @@ namespace ETSApp
                     txtDOB.Text = result.Data.DOB.ToString("yyyy / MM / dd");
                     txtPhone.Text = result.Data.Phone;
                     lblID.Text = result.Data.EmpID.ToString();
+
+                    //error
+                    if (txtSearchEmail.Text == "")
+                    {
+                        MessageBox.Show("Please enter email address");
+                    }
+                    else if (result.Data.Email == null)
+                    {
+                        MessageBox.Show("Error, email address not registered.");
+                    }
                     break;
                 case EnumResult.Fail:
                     MessageBox.Show("Error, make sure email address is correct.");
